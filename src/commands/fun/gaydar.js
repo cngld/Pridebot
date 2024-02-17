@@ -1,5 +1,21 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const chalk = require("chalk");
+const utility_functions = {
+  // Probabilities range from 0 (never) to 1 (always); percent chance is 100*probablity.
+  chance: function (probability) {
+    if (Math.random() > probability) return false;
+    return true;
+  },
+  number_format_commas: function (number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  },
+};
+const ids = {
+  austin: "288897433805651968",
+  paul: "218507234144026625",
+  driver: "691506668781174824",
+  bot: "1101256478632972369",
+};
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -28,32 +44,18 @@ module.exports = {
     const userName = targetUser.username;
     const userid = targetUser.id;
 
-    const austinID = "288897433805651968";
-    const paulID = "218507234144026625";
-    const driverID = "691506668781174824";
-    const botID = "1101256478632972369";
-
-    // Probabilities range from 0 (never) to 1 (always); percent chance is 100*probablity.
-    function chance(probability) {
-      if (Math.random() > probability) return false;
-      return true;
-    }
-    function number_format_commas(number) {
-      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
     let meter;
-    if (userid === austinID) {
+    if (userid === ids.austin) {
       meter = 300;
-    } else if (userid === paulID) {
+    } else if (userid === ids.paul) {
       meter = 0.1;
-    } else if (userid === driverID) {
+    } else if (userid === ids.driver) {
       meter = 69;
-    } else if (userid === botID) {
+    } else if (userid === ids.bot) {
       meter = 101;
-    } else if (chance(0.0001)) {
+    } else if (utility_functions.chance(0.0001)) {
       meter = Math.floor(Math.random() * 2354082) + 500;
-      if (chance(0.5)) {
+      if (utility_functions.chance(0.5)) {
         meter *= -1;
       }
     } else {
@@ -63,7 +65,9 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`How gay is ${userName}?`)
       .setDescription(
-        `<@${userid}> is **${number_format_commas(meter)}% gay!**`
+        `<@${userid}> is **${utility_functions.number_format_commas(
+          meter
+        )}% gay!**`
       )
       .setColor(0xff00ae)
       .setFooter({
