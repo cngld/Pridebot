@@ -38,6 +38,9 @@ module.exports = {
       if (Math.random() > probability) return false;
       return true;
     }
+    function number_format_commas(number) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
     let meter;
     if (userid === austinID) {
@@ -49,7 +52,7 @@ module.exports = {
     } else if (userid === botID) {
       meter = 101;
     } else if (chance(0.0001)) {
-      meter = Math.floor(Math.random() * 2354087239087) + 500;
+      meter = Math.floor(Math.random() * 2354082) + 500;
       if (chance(0.5)) {
         meter *= -1;
       }
@@ -59,7 +62,9 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setTitle(`How gay is ${userName}?`)
-      .setDescription(`<@${userid}> is **${meter}% gay!**`)
+      .setDescription(
+        `<@${userid}> is **${number_format_commas(meter)}% gay!**`
+      )
       .setColor(0xff00ae)
       .setFooter({
         text: "The bot has 99.99% accuracy rate on checking users gayness",
