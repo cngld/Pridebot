@@ -5,11 +5,12 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("gaydar")
     .setDescription("How gay are you?")
-    .addUserOption(option =>
-      option
-        .setName("target")
-        .setDescription("See how gay a user is")
-        .setRequired(false) // Option is not required
+    .addUserOption(
+      (option) =>
+        option
+          .setName("target")
+          .setDescription("See how gay a user is")
+          .setRequired(false) // Option is not required
     ),
 
   async execute(interaction, client) {
@@ -22,14 +23,21 @@ module.exports = {
       )
     );
 
-    const targetUser = interaction.options.getUser("target") || interaction.user;
-    const userName = targetUser.username; 
-    const userid = targetUser.id; 
+    const targetUser =
+      interaction.options.getUser("target") || interaction.user;
+    const userName = targetUser.username;
+    const userid = targetUser.id;
 
     const austinID = "288897433805651968";
     const paulID = "218507234144026625";
-	const driverID = "691506668781174824"
-	const botID = "1101256478632972369";
+    const driverID = "691506668781174824";
+    const botID = "1101256478632972369";
+
+    // Probabilities range from 0 (never) to 1 (always); percent chance is 100*probablity.
+    function chance(probability) {
+      if (Math.random() > probability) return false;
+      return true;
+    }
 
     let meter;
     if (userid === austinID) {
@@ -40,6 +48,11 @@ module.exports = {
       meter = 69;
     } else if (userid === botID) {
       meter = 101;
+    } else if (chance(0.0001)) {
+      meter = Math.floor(Math.random() * 235409872359087) + 500;
+      if (chance(0.5)) {
+        meter *= -1;
+      }
     } else {
       meter = Math.floor(Math.random() * 101);
     }
@@ -48,7 +61,9 @@ module.exports = {
       .setTitle(`How gay is ${userName}?`)
       .setDescription(`<@${userid}> is **${meter}% gay!**`)
       .setColor(0xff00ae)
-      .setFooter({ text: "The bot has 99.99% accuracy rate on checking users gayness" });
+      .setFooter({
+        text: "The bot has 99.99% accuracy rate on checking users gayness",
+      });
     await interaction.reply({ embeds: [embed] });
   },
 };
