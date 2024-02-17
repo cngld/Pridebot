@@ -49,7 +49,7 @@ module.exports = {
     } else if (userid === botID) {
       meter = 101;
     } else if (chance(0.0001)) {
-      meter = Math.floor(Math.random() * 235409872359087) + 500;
+      meter = Math.floor(Math.random() * 2354087239087) + 500;
       if (chance(0.5)) {
         meter *= -1;
       }
