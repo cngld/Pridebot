@@ -39,7 +39,7 @@ module.exports = {
       return true;
     }
     function number_format_commas(number) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     let meter;
